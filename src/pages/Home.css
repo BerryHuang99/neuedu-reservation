@@ -1,0 +1,63 @@
+.Home {
+    /* text-align: center; */
+  }
+  
+.banner-img {
+  width: 100%;
+  height: 56.25%;
+}
+
+.navigator {
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.navigator a {
+  color: #555;
+}
+
+.navigator a:visited {
+  color: #555;
+}
+
+.navigator .icon {
+  font-size: 1.5rem;
+  color: #fff;
+  line-height: 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50% 50%;
+}
+
+.navigator .building {
+  background: linear-gradient(left,#9EDFDF,#66CCCC);
+}
+
+.navigator .users {
+  background: linear-gradient(left,#FF7DDF,#FF33CC);
+}
+
+.navigator .map {
+  background: linear-gradient(left,#B5FFB5,#99FF99);
+}
+
+.navigator .comments {
+  background: linear-gradient(left,#FFDF9E,#FFCC66);
+}
+
+.title-bar {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+.more {
+  color: #555;
+  float: right;
+}
+
+.more:hover {
+  color: #555;
+}
