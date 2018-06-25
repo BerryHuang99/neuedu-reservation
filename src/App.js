@@ -18,6 +18,8 @@ class App extends Component {
           <Route exact path='/user' component={User}/>
         </Switch>
 
+        <div className="footer-back">
+        </div>
         <footer id="footer">
           <NavLink exact className="nav" activeClassName="selected" to="/"><i className="home icon"></i><div className="nav-label">首页</div></NavLink>
           <NavLink className="nav" activeClassName="selected" to="/courses"><i className="unordered list icon"></i><div className="nav-label">课程</div></NavLink>

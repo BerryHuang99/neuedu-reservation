@@ -2,43 +2,44 @@ import React, { Component } from 'react';
 import './Home.css';
 import ReactSwipe from 'react-swipe';
 import CoursesList from '../components/CourseList';
+import { Input } from 'semantic-ui-react'
 
 class Home extends Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      bannerUrl: ["/image/banner1.jpg", "/image/banner2.jpg"],
+      bannerUrl: ["image/banner1.jpg", "image/banner2.jpg"],
       coursesList1: [
          {
           courseId: 1,
-          imageUrl: "/image/banner1.jpg",
-          courseTitle: "PHP免费试听",
-          price: "12",
-          courseCategory: "PHP",
+          imageUrl: "image/course1.jpg",
+          courseTitle: "Spring Cloud免费试听",
+          price: "0",
+          courseCategory: "Spring",
          },
          {
           courseId: 2,
-          imageUrl: "/image/banner1.jpg",
-          courseTitle: "PHP免费试听",
-          price: "12",
-          courseCategory: "PHP",
+          imageUrl: "image/course2.jpg",
+          courseTitle: "Go免费试听",
+          price: "0",
+          courseCategory: "Go",
          } 
       ],
       coursesList2: [
         {
          courseId: 1,
-         imageUrl: "/image/banner2.jpg",
-         courseTitle: "PHP免费试听",
-         price: "12",
-         courseCategory: "PHP",
+         imageUrl: "image/course3.jpg",
+         courseTitle: "JavaScript入门",
+         price: "120",
+         courseCategory: "JavaScript",
         },
         {
          courseId: 2,
-         imageUrl: "/image/banner2.jpg",
-         courseTitle: "PHP免费试听",
-         price: "12",
-         courseCategory: "PHP",
+         imageUrl: "image/course4.jpg",
+         courseTitle: "mpVue专业培训",
+         price: "120",
+         courseCategory: "框架",
         } 
      ]
     }
@@ -46,10 +47,16 @@ class Home extends Component {
   render() {
     let banner = [];
     for (let i = 0; i < this.state.bannerUrl.length; i++) {
-       banner.push(<div key={i}><img className="banner-img" src={this.state.bannerUrl[i]} alt="banner"/></div>);
+       banner.push(<div className="banner-wrap" key={i}><img className="banner-img" src={this.state.bannerUrl[i]} alt="banner"/></div>);
     }
     return (
       <div className="Home">
+        <div className="head-bar">
+          <i className="icon cart"></i>
+          <div className="search">
+            <Input size='mini' icon='search' placeholder='搜索课程' />   
+          </div>
+        </div>
         <ReactSwipe className="carousel" swipeOptions={{continuous: true, auto: 3000}}>
           {banner}
         </ReactSwipe>

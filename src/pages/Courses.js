@@ -10,43 +10,41 @@ class Courses extends Component {
     this.state = {
       coursesList: [
         {
-         courseId: 1,
-         imageUrl: "/image/banner1.jpg",
-         courseTitle: "PHP免费试听",
-         price: "12",
-         courseCategory: "PHP",
-        },
-        {
-         courseId: 2,
-         imageUrl: "/image/banner2.jpg",
-         courseTitle: "PHP免费试听",
-         price: "12",
-         courseCategory: "PHP",
-        },
-        {
-          courseId: 3,
-          imageUrl: "/image/banner1.jpg",
-          courseTitle: "PHP免费试听",
-          price: "12",
-          courseCategory: "PHP",
+          courseId: 1,
+          imageUrl: "image/course1.jpg",
+          courseTitle: "Spring Cloud免费试听",
+          price: "0",
+          courseCategory: "Spring",
          },
          {
-          courseId: 4,
-          imageUrl: "/image/banner2.jpg",
-          courseTitle: "PHP免费试听",
-          price: "12",
-          courseCategory: "PHP",
+          courseId: 2,
+          imageUrl: "image/course2.jpg",
+          courseTitle: "Go免费试听",
+          price: "0",
+          courseCategory: "Go",
          },
+        {
+          courseId: 3,
+          imageUrl: "image/course3.jpg",
+          courseTitle: "JavaScript入门",
+          price: "120",
+          courseCategory: "JavaScript",
+        },
+        {
+          courseId: 4,
+          imageUrl: "image/course4.jpg",
+          courseTitle: "mpVue专业培训",
+          price: "120",
+          courseCategory: "框架",
+        }
      ],
     }
   };
   render() {
     return (
       <div className="Courses">
-        <img className="banner" src="/image/banner2.jpg" />
 
         <div className="courses-body">
-          <div className="courses-title">精品推荐</div>
           <div className="menu">
 
             <Dropdown text='全部'>
