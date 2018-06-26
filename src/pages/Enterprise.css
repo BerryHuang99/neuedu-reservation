@@ -1,0 +1,26 @@
+.Enterprise {
+    height: 100%;
+    width: 100%;
+}
+
+.Enterprise-body {
+    margin: 0 20px;
+}
+
+h4 {
+    text-align: center;
+}
+
+p {
+    text-indent: 2em;
+}
+
+hr {
+    border: 1px dotted #eee;
+    margin: 30px 0;
+}
+
+.show-image {
+    margin: 15px auto;
+    box-shadow: 0 0 10px #ccc;
+}

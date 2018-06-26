@@ -3,6 +3,7 @@ import './Home.css';
 import ReactSwipe from 'react-swipe';
 import CoursesList from '../components/CourseList';
 import { Input } from 'semantic-ui-react'
+import {NavLink} from 'react-router-dom'
 
 class Home extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class Home extends Component {
     return (
       <div className="Home">
         <div className="head-bar">
-          <i className="icon cart"></i>
+          <NavLink to="/orders"><i className="icon cart"></i></NavLink>
           <div className="search">
             <Input size='mini' icon='search' placeholder='搜索课程' />   
           </div>
@@ -61,19 +62,19 @@ class Home extends Component {
           {banner}
         </ReactSwipe>
         <div className="navigator">
-          <a href="#">
+          <NavLink to="/enterprise">
             <i className="building icon"></i>
             <div>企业简介</div>
-          </a>
-          <a href="#">
+          </NavLink>
+          <NavLink to="/teachers">
             <i className="users icon"></i>
             <div>师资力量</div>
-          </a>
-          <a href="#">
+          </NavLink>
+          <NavLink to="location">
             <i className="map pin icon"></i>
             <div>学校位置</div>
-          </a>
-          <a href="#">
+          </NavLink>
+          <a href="">
             <i className="comments icon"></i>
             <div>联系我们</div>
           </a>
@@ -82,7 +83,7 @@ class Home extends Component {
         <div>
           <div className="title-bar">
             试听课
-            <a className="more" href="#">更多<i className="arrow right icon"></i></a>
+            <NavLink className="more" to="/courses">更多<i className="arrow right icon"></i></NavLink>
           </div>
           <div className="course-list">
             <CoursesList list={this.state.coursesList1}></CoursesList>
@@ -90,7 +91,7 @@ class Home extends Component {
 
           <div className="title-bar">
             超值精品课
-            <a className="more" href="#">更多<i className="arrow right icon"></i></a>
+            <NavLink className="more" to="/courses">更多<i className="arrow right icon"></i></NavLink>
           </div>
           <div className="course-list">
             <CoursesList list={this.state.coursesList2}></CoursesList>

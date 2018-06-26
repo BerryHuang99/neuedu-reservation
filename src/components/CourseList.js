@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CourseList.css';
 import {Card, Image} from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom'
 
 class CoursesList extends Component {
   constructor(props) {
@@ -15,7 +16,9 @@ class CoursesList extends Component {
         for (let item of this.props.list) {
             list.push(
                 <Card className="course-card" key={item.courseId}>
-                    <Image className="course-image" src={item.imageUrl}/>
+                    <NavLink to="/coursedetail">
+                        <Image className="course-image" src={item.imageUrl}/>
+                    </NavLink>
                     <Card.Content>
                     <Card.Header>{item.courseTitle}</Card.Header>
                     <Card.Meta>

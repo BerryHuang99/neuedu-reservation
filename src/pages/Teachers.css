@@ -1,0 +1,34 @@
+.teachers-banner {
+    width: 100%;
+}
+
+.Teachers {
+    overflow: hidden;
+}
+
+.teacher {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.teacher-avatar {
+    width: 70px;
+    height: 70px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.teacher-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.show-teachers {
+    margin-bottom: -1px;
+}

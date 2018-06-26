@@ -45,6 +45,7 @@
 .navigator .icon {
   font-size: 1.5rem;
   color: #fff;
+  margin: 10px;
   line-height: 3.5rem;
   width: 3.5rem;
   height: 3.5rem;
@@ -52,19 +53,23 @@
 }
 
 .navigator .building {
-  background: linear-gradient(left,#9EDFDF,#66CCCC);
+  background: linear-gradient(to right, #9EDFDF,#66CCCC);
+  box-shadow: 0 10px 10px #E3F6F6;
 }
 
 .navigator .users {
-  background: linear-gradient(left,#FF7DDF,#FF33CC);
+  background: linear-gradient(to right,#FF90E3,#FF33CC);
+  box-shadow: 0 10px 10px #FFDAF6;
 }
 
 .navigator .map {
-  background: linear-gradient(left,#B5FFB5,#99FF99);
+  background: linear-gradient(to right,#C7FFC7,#99FF99);
+  box-shadow: 0 10px 10px #ECFFEC;
 }
 
 .navigator .comments {
-  background: linear-gradient(left,#FFDF9E,#FFCC66);
+  background: linear-gradient(to right,#FFE3AC,#FFCC66);
+  box-shadow: 0 10px 10px #FFF6E3;
 }
 
 .title-bar {

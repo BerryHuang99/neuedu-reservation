@@ -19,7 +19,7 @@ class Message extends Component {
         let commentList = "";
         if (this.props.imageUrls.length && Array.isArray(this.props.imageUrls)) {
             for (let i = 0; i < this.props.imageUrls.length; i++) {
-                img.push(<img src={this.props.imageUrls[i]} key={i}/>);
+                img.push(<img src={this.props.imageUrls[i]} key={i} alt="消息图"/>);
             }
         }
         if (this.props.comments.length && Array.isArray(this.props.comments)) {
@@ -35,7 +35,7 @@ class Message extends Component {
         <Feed>
             <Feed.Event>
                 <Feed.Label className="feed-label">
-                    <img  className="avatar" src={this.props.avatar}/>
+                    <img  className="avatar" src={this.props.avatar} alt="头像"/>
                 </Feed.Label>
                 <Feed.Content className="feed-content">
                     <Feed.Summary>
