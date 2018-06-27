@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import './Location.css';
 import { Modal, List, Button, WhiteSpace, WingBlank, Picker } from 'antd-mobile';
-import 'antd-mobile/lib/modal/style/css';
-import 'antd-mobile/lib/list/style/css';
-import 'antd-mobile/lib/button/style/css';
-import 'antd-mobile/lib/white-space/style/css';
-import 'antd-mobile/lib/picker/style/css';
-import 'antd-mobile/lib/wing-blank/style/css';
 
 
 class Location extends Component {

@@ -3,8 +3,6 @@ import './Courses.css';
 // import { Dropdown } from 'semantic-ui-react';
 import CoursesList from '../components/CourseList';
 import { Picker, List } from 'antd-mobile';
-import 'antd-mobile/lib/picker/style/css';
-import 'antd-mobile/lib/list/style/css';
 
 class Courses extends Component {
   constructor(props) {
