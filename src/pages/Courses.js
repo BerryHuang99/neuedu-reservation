@@ -1,13 +1,32 @@
 import React, { Component } from 'react';
 import './Courses.css';
-import { Dropdown } from 'semantic-ui-react';
+// import { Dropdown } from 'semantic-ui-react';
 import CoursesList from '../components/CourseList';
+import { Picker, List } from 'antd-mobile';
+import 'antd-mobile/lib/picker/style/css';
+import 'antd-mobile/lib/list/style/css';
 
 class Courses extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      location: [
+        {value: 1, label: '全部机构'},
+        {value: 2, label: '实训中心'},
+        {value: 3, label: "艺术中心"},
+        {value: 4, label: "恒大名都"}
+      ],
+      categories: [
+        {value: 1, label: '全部分类'},
+        {value: 2, label: 'Java'},
+        {value: 3, label: 'PHP'},
+        {value:4, label: '小程序'}
+      ],
+      type: [
+        {value: 1, label: '精品课程'},
+        {value: 2, label: '体验课程'}
+      ],
       coursesList: [
         {
           courseId: 1,
@@ -47,7 +66,19 @@ class Courses extends Component {
         <div className="courses-body">
           <div className="menu">
 
-            <Dropdown text='全部'>
+            <Picker title="" cols={1} data={this.state.location} value={[1]}>
+              <List.Item className="menu-item">全部机构</List.Item>
+            </Picker>
+
+            <Picker title="" cols={1} data={this.state.categories} value={[1]}>
+              <List.Item className="menu-item">全部分类</List.Item>
+            </Picker>
+
+            <Picker title="" cols={1} data={this.state.type} value={[1]}>
+              <List.Item className="menu-item">精品课程</List.Item>
+            </Picker>
+
+            {/* <Dropdown text='全部'>
               <Dropdown.Menu>
                 <Dropdown.Item text='实训中心' />
                 <Dropdown.Item text='艺术中心' />
@@ -65,7 +96,7 @@ class Courses extends Component {
               <Dropdown.Menu>
                 <Dropdown.Item text='体验课程' />
               </Dropdown.Menu>
-            </Dropdown>    
+            </Dropdown>     */}
           </div>
           
           <div className="list">

@@ -31,3 +31,11 @@
     justify-content: center;
     margin-top: 20px;
 }
+
+.am-list-extra {
+    display: none;
+}
+
+.am-list-content {
+    font-size: 1.1rem !important;
+}
