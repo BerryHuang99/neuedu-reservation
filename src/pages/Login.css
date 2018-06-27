@@ -1,0 +1,38 @@
+.login-title {
+    height: 250px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-avatar {
+    width: 80px;
+    height: 80px;
+    padding: 3px;
+    border: 1px solid #7bd6d4;
+    border-radius: 50%;
+}
+
+form {
+    overflow: hidden;
+    margin: 0 40px;
+}
+
+.input {
+    border: 1px solid #eee;
+    border-radius: 30px;
+    margin: 10px 0;
+}
+
+.input .user, .input .lock, .input .phone {
+    color: #7bd6d4;
+}
+
+.form-button {
+    background-color: #7bd6d4;
+    color: #fff;
+    border-radius: 30px;
+    margin: 10px 0;
+    box-shadow: 0 5px 5px #DBF4F3;
+}

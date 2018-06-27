@@ -21,7 +21,7 @@ class App extends Component {
 
         <div className="footer-back">
         </div>
-        <footer id="footer">
+        <footer className="footer">
           <NavLink exact className="nav" activeClassName="selected" to="/"><i className="home icon"></i><div className="nav-label">首页</div></NavLink>
           <NavLink className="nav" activeClassName="selected" to="/courses"><i className="unordered list icon"></i><div className="nav-label">课程</div></NavLink>
           <NavLink className="nav" activeClassName="selected" to="/discover"><i className="eye icon"></i><div className="nav-label">发现</div></NavLink>

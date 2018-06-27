@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './Orders.css';
+import './Appointments.css';
 import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
 
-class Orders extends Component {
+class Appointments extends Component {
     constructor(props) {
         super(props);
 
@@ -12,14 +12,12 @@ class Orders extends Component {
     };
     render() {
         const tabs = [
-            { title: <Badge>全部订单</Badge> },
-            { title: <Badge>待付款</Badge> },
-            { title: <Badge>已付款</Badge> },
-            { title: <Badge>已使用</Badge> },
-            { title: <Badge>取消/退款</Badge> },
+            { title: <Badge>全部预约</Badge> },
+            { title: <Badge>待处理</Badge> },
+            { title: <Badge>已处理</Badge> },
           ];
         return (
-            <div className="Orders">
+            <div className="Appointments">
                 <Tabs tabs={tabs}
                 initialPage={0}
                 onChange={(tab, index) => { console.log('onChange', index, tab); }}
@@ -35,12 +33,6 @@ class Orders extends Component {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', backgroundColor: '#fff' }}>
                     Content of third tab
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', backgroundColor: '#fff' }}>
-                    Content of forth tab
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', backgroundColor: '#fff' }}>
-                    Content of fifth tab
-                </div>
                 </Tabs>
                 <WhiteSpace />
             </div>
@@ -48,4 +40,4 @@ class Orders extends Component {
     }
 }
 
-export default Orders;
+export default Appointments;

@@ -98,7 +98,10 @@ class Discover extends Component {
 
     return (
       <div className="Discover">
-        {messages}
+        <img className="discover-banner" src="image/banner3.jpg" alt="banner"/>
+        <div className="messages">
+          {messages}
+        </div>
       </div>
     );
   }

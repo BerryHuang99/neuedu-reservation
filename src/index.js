@@ -12,6 +12,7 @@ import CourseDetail from './pages/CourseDetail';
 import Buy from './pages/Buy';
 import Appoint from './pages/Appoint';
 import Orders from './pages/Orders';
+import Appointments from './pages/Appointments';
 import Wallet from './pages/Wallet';
 import Login from './pages/Login';
 
@@ -29,6 +30,7 @@ ReactDOM.render(<HashRouter>
                         <Route exact path="/buy" component={Buy}/>
                         <Route exact path="/appoint" component={Appoint}/>
                         <Route exact path="/orders" component={Orders}/>
+                        <Route exact path="/appointments" component={Appointments}/>
                         <Route exact path="/wallet" component={Wallet}/>
                         <Route exact path="/login" component={Login}/>
 

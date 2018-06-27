@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import './Wallet.css'
+import React, { Component } from 'react';
+import './Wallet.css';
+import { Button } from 'antd-mobile';
 
 class Wallet extends Component {
     constructor(props) {
@@ -12,7 +13,11 @@ class Wallet extends Component {
     render() {
         return (
             <div className="Wallet">
-                this is Wallet
+                <div className="wallet-banner">
+                    <span>￥100</span>
+                </div>
+                <Button className="wallet-button">充值</Button>
+                <Button className="wallet-button">提现</Button>
             </div>
         );
     }

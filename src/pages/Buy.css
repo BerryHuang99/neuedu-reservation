@@ -1,0 +1,25 @@
+.page-title {
+    background-color: #fff;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 10px;
+    box-shadow: 0 5px 10px #eee;
+}
+
+.buy-image {
+    overflow: hidden;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.buy-image img {
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px #ccc;
+}
+
+.buy-body {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px;
+}

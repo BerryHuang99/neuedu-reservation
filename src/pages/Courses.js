@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Courses.css';
 // import { Dropdown } from 'semantic-ui-react';
 import CoursesList from '../components/CourseList';
-import { Picker, List } from 'antd-mobile';
+import { Picker } from 'antd-mobile';
 
 class Courses extends Component {
   constructor(props) {
@@ -65,15 +65,15 @@ class Courses extends Component {
           <div className="menu">
 
             <Picker title="" cols={1} data={this.state.location} value={[1]}>
-              <List.Item className="menu-item">全部机构</List.Item>
+              <div>全部机构</div>
             </Picker>
 
             <Picker title="" cols={1} data={this.state.categories} value={[1]}>
-              <List.Item className="menu-item">全部分类</List.Item>
+              <div>全部分类</div>
             </Picker>
 
             <Picker title="" cols={1} data={this.state.type} value={[1]}>
-              <List.Item className="menu-item">精品课程</List.Item>
+              <div>精品课程</div>
             </Picker>
 
             {/* <Dropdown text='全部'>
