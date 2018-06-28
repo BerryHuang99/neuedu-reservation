@@ -43,13 +43,17 @@ class User extends Component {
           </div>
           </NavLink>
 
+          <NavLink to="/service">
           <div className="user-bar">
             <span className="method"><i className="icon commenting "></i>我的客服</span><span className="bar-right">></span>
           </div>
+          </NavLink>
 
+          <NavLink to="/login">
           <div className="user-bar">
             <span className="method"><i className="icon sign out "></i>注销</span><span className="bar-right">></span>
           </div>
+          </NavLink>
         </div>
 
       </div>

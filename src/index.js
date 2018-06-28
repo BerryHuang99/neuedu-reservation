@@ -15,6 +15,7 @@ import Orders from './pages/Orders';
 import Appointments from './pages/Appointments';
 import Wallet from './pages/Wallet';
 import Login from './pages/Login';
+import Service from './pages/Service';
 
 
 ReactDOM.render(<HashRouter>
@@ -33,6 +34,7 @@ ReactDOM.render(<HashRouter>
                         <Route exact path="/appointments" component={Appointments}/>
                         <Route exact path="/wallet" component={Wallet}/>
                         <Route exact path="/login" component={Login}/>
+                        <Route exact path="/service" component={Service}/>
 
                     </Switch>
                 </HashRouter>, document.getElementById('root'));

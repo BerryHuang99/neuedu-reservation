@@ -74,10 +74,10 @@ class Home extends Component {
             <i className="map pin icon"></i>
             <div>学校位置</div>
           </NavLink>
-          <a href="">
+          <NavLink to="/service">
             <i className="comments icon"></i>
             <div>联系我们</div>
-          </a>
+          </NavLink>
         </div>
 
         <div>

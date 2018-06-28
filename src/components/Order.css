@@ -1,0 +1,45 @@
+.Order {
+    width: 100%;
+    overflow: hidden;
+}
+
+.order-header {
+    padding: 5px 10px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-body {
+    padding: 10px 10px;
+    background-color: #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-img {
+    width: 190px;
+    height: 100px;
+}
+
+.order-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.order-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.order-button {
+    background-color: #1cb6b3;
+    color: #fff;
+    margin: 0 0 0 10px;
+}
