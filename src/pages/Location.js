@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Location.css';
 import { Modal, List, Button, WhiteSpace, WingBlank, Picker } from 'antd-mobile';
+import Loading from '../components/Loading';
 
 
 class Location extends Component {
@@ -10,6 +11,7 @@ class Location extends Component {
         this.closeModal = this.closeModal.bind(this);
 
         this.state = {
+            hideLoading: false,
             showModal: false,
             enterprises: [
                 {value: 1, label: '实训中心'},
@@ -23,10 +25,14 @@ class Location extends Component {
     };
     closeModal() {
         this.setState({showModal: false});
-    }
+    };
+    componentWillMount() {
+      window.scrollTo(0, 0);
+    };
     render() {
         return (
             <div className="Location">
+                <Loading hide={this.state.hideLoading}/>
                 <div id="container"></div>
 
                 <Button id="location-button" onClick={this.showModal}>详情</Button>
@@ -60,7 +66,7 @@ class Location extends Component {
         let point = new BMap.Point(123.445967,41.711486);  // 创建点坐标  
         map.centerAndZoom(point, 15); 
         let marker = new BMap.Marker(point);        // 创建标注    
-        map.addOverlay(marker,);
+        map.addOverlay(marker);
         let label = new BMap.Label("<div class='map-title'>沈阳东软睿道</div><div>地址:世纪路51附近</div>",  {
             offset: new BMap.Size(25, 15)
         });
@@ -76,6 +82,10 @@ class Location extends Component {
             });
         marker.setLabel(label);
         map.enableScrollWheelZoom(true);
+        setTimeout(() =>
+            this.setState({hideLoading: true}),
+            1000
+        );
     };
 }
 

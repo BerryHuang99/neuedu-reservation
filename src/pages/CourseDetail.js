@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import './CourseDetail.css';
 import { List } from 'antd-mobile';
 import {NavLink} from 'react-router-dom';
+import Loading from '../components/Loading';
 
 class CourseDetail extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            hideLoading: false,
             phone: 12345678910,
             address: '这里是地址1234564487',
             name: 'Php',
@@ -15,9 +17,14 @@ class CourseDetail extends Component {
             content: '这里是富文本'
         }
     };
+    componentWillMount() {
+      window.scrollTo(0, 0);
+    };
     render() {
         return (
             <div className="CourseDetail">
+                <Loading hide={this.state.hideLoading}/>
+
                 <div className="page-title">课程详情</div>
 
                 <List>
@@ -84,6 +91,11 @@ class CourseDetail extends Component {
             });
         marker.setLabel(label);
         map.enableScrollWheelZoom(true);
+
+        setTimeout(() =>
+            this.setState({hideLoading: true}),
+            1000
+        );
     };
 }
 

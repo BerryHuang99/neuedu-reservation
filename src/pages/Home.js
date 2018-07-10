@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 import './Home.css';
 import ReactSwipe from 'react-swipe';
 import CoursesList from '../components/CourseList';
-import { Input } from 'semantic-ui-react'
-import {NavLink} from 'react-router-dom'
+import { Input } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
+import { PullToRefresh } from 'antd-mobile';
+import Loading from '../components/Loading';
 
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.refresh = this.refresh.bind(this);
     
     this.state = {
+      refresh: false,
+      hideLoading: false,
       bannerUrl: ["image/banner1.jpg", "image/banner2.jpg"],
       coursesList1: [
          {
@@ -45,6 +50,9 @@ class Home extends Component {
      ]
     }
   };
+  componentWillMount() {
+    window.scrollTo(0, 0);
+  };
   render() {
     let banner = [];
     for (let i = 0; i < this.state.bannerUrl.length; i++) {
@@ -52,12 +60,17 @@ class Home extends Component {
     }
     return (
       <div className="Home">
+        <Loading hide={this.state.hideLoading}/>
+
         <div className="head-bar">
           <NavLink to="/orders"><i className="icon cart"></i></NavLink>
           <div className="search">
             <Input size='mini' icon='search' placeholder='搜索课程' />   
           </div>
+          <NavLink to="/appointments"><i className="icon bars"></i></NavLink>
         </div>
+
+        <PullToRefresh onRefresh={this.refresh} refreshing={this.state.refresh}>
         <ReactSwipe className="carousel" swipeOptions={{continuous: true, auto: 3000}}>
           {banner}
         </ReactSwipe>
@@ -97,9 +110,23 @@ class Home extends Component {
             <CoursesList list={this.state.coursesList2}></CoursesList>
           </div>
         </div>
+        </PullToRefresh>
 
       </div>
     );
+  };
+  componentDidMount() {
+    setTimeout(() =>
+      this.setState({hideLoading: true}),
+      1000
+    )
+  };
+  refresh() {
+    this.setState({refresh: true});
+
+    setTimeout(() => {
+      this.setState({refresh: false});
+    }, 1000);
   }
 }
 

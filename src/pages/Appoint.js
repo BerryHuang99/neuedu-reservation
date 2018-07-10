@@ -1,19 +1,26 @@
 import React, { Component } from 'react'
 import './Appoint.css'
 import {InputItem, Button, TextareaItem} from 'antd-mobile';
+import Loading from '../components/Loading';
 
 class Appoint extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            hideLoading: false,
             price: 120,
             courseName: 'Spring Cloud'
         }
     };
+    componentWillMount() {
+      window.scrollTo(0, 0);
+    };
     render() {
         return (
             <div className="Appoint">
+                <Loading hide={this.state.hideLoading}/>
+
                 <div className="page-title">
                     预约课程
                 </div>
@@ -28,6 +35,12 @@ class Appoint extends Component {
                     <Button className="form-button">预约</Button>
                 </div>
             </div>
+        );
+    };
+    componentDidMount() {
+        setTimeout(() =>
+            this.setState({hideLoading: true}),
+            1000
         );
     }
 }

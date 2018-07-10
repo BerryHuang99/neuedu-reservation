@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import './Courses.css';
 // import { Dropdown } from 'semantic-ui-react';
 import CoursesList from '../components/CourseList';
-import { Picker } from 'antd-mobile';
+import { Picker, PullToRefresh } from 'antd-mobile';
+import Loading from '../components/Loading';
 
 class Courses extends Component {
   constructor(props) {
     super(props);
+    this.refresh = this.refresh.bind(this);
 
     this.state = {
+      hideLoading: false,
+      refresh: false,
       location: [
         {value: 1, label: '全部机构'},
         {value: 2, label: '实训中心'},
@@ -57,9 +61,13 @@ class Courses extends Component {
      ],
     }
   };
+  componentWillMount() {
+    window.scrollTo(0, 0);
+  };
   render() {
     return (
       <div className="Courses">
+        <Loading hide={this.state.hideLoading}/>
 
         <div className="courses-body">
           <div className="menu">
@@ -76,34 +84,30 @@ class Courses extends Component {
               <div>精品课程</div>
             </Picker>
 
-            {/* <Dropdown text='全部'>
-              <Dropdown.Menu>
-                <Dropdown.Item text='实训中心' />
-                <Dropdown.Item text='艺术中心' />
-                <Dropdown.Item text='恒大名都' />
-              </Dropdown.Menu>
-            </Dropdown>  
-
-            <Dropdown text='分类'>
-              <Dropdown.Menu>
-                <Dropdown.Item text='JAVA' />
-              </Dropdown.Menu>
-            </Dropdown>  
-
-            <Dropdown text='精品课程'>
-              <Dropdown.Menu>
-                <Dropdown.Item text='体验课程' />
-              </Dropdown.Menu>
-            </Dropdown>     */}
           </div>
-          
+
+          <PullToRefresh direction="up" refreshing={this.state.refresh} onRefresh={this.refresh}>          
           <div className="list">
             <CoursesList list={this.state.coursesList}></CoursesList>
           </div>
-
+          </PullToRefresh>
+          
         </div>
       </div>
     );
+  };
+  componentDidMount() {
+      setTimeout(() =>
+          this.setState({hideLoading: true}),
+          1000
+      );
+  };
+  refresh() {
+    this.setState({refresh: true});
+    console.log("refresh");
+    setTimeout(() => {
+      this.setState({refresh: false})
+    }, 2000)
   }
 }
 

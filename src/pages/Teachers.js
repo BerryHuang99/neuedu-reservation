@@ -1,11 +1,13 @@
-import React, { Component } from 'react'
-import './Teachers.css'
+import React, { Component } from 'react';
+import './Teachers.css';
+import Loading from '../components/Loading';
 
 class Teachers extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            hideLoading: false,
             banner: 'image/teachers.jpg',
             teachers: [
                 {
@@ -20,6 +22,9 @@ class Teachers extends Component {
                 }
             ]
         }
+    };
+    componentWillMount() {
+      window.scrollTo(0, 0);
     };
     render() {
 
@@ -41,12 +46,19 @@ class Teachers extends Component {
         }
         return (
             <div className="Teachers">
+                <Loading hide={this.state.hideLoading}/>
                 <img className="teachers-banner" src={this.state.banner} alt="名师阵容"/>
 
                 <div className="show-teachers">
                     {teachers}
                 </div>
             </div>
+        );
+    };
+    componentDidMount() {
+        setTimeout(() =>
+            this.setState({hideLoading: true}),
+            1000
         );
     }
 }

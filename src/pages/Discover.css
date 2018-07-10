@@ -5,6 +5,7 @@
 .messages {
     width: 100%;
     padding: 10px 5px 10px 20px;
+    margin-bottom: 60px;
     overflow: hidden;
     box-sizing: border-box;
     background-color: #fff;

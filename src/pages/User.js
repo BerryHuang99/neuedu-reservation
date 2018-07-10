@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 import './User.css';
 import { NavLink } from 'react-router-dom';
+import Loading from '../components/Loading';
 
 class User extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      hideLoading: false,
       userId: 1,
       userName: 'hyf',
       avatar: 'image/avatar.png'
     }
   };
+  componentWillMount() {
+    window.scrollTo(0, 0);
+  };
   render() {
     return (
       <div className="User">
+        <Loading hide={this.state.hideLoading}/>
+
         <div className="user-banner">
           <img className="user-avatar" src={this.state.avatar} alt="头像"/>
           <div className="user-name">{this.state.userName}</div>
@@ -58,6 +65,12 @@ class User extends Component {
 
       </div>
     );
+  };
+  componentDidMount() {
+      setTimeout(() =>
+          this.setState({hideLoading: true}),
+          1000
+      );
   }
 }
 

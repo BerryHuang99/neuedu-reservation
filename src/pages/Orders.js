@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import './Orders.css';
-import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
+import { Tabs, PullToRefresh, Badge } from 'antd-mobile';
 import Order from '../components/Order';
+import Loading from '../components/Loading';
 
 class Orders extends Component {
     constructor(props) {
         super(props);
+        this.refresh = this.refresh.bind(this);
 
         this.state = {
+            refresh: false,
+            hideLoading: false,
             orders: [
                 {
                     orderId: 9,
@@ -24,21 +28,21 @@ class Orders extends Component {
                     coursePrice: 0,
                 },
                 {
-                    orderId: 9,
+                    orderId: 7,
                     state: 2,
                     imageUrl: 'image/course3.jpg',
                     courseTitle: '精品课：JS',
                     coursePrice: 120,
                 },
                 {
-                    orderId: 9,
+                    orderId: 6,
                     state: 3,
                     imageUrl: 'image/course4.jpg',
                     courseTitle: '精品课：mpVue',
                     coursePrice: 120,
                 },
                 {
-                    orderId: 9,
+                    orderId: 5,
                     state: 4,
                     imageUrl: 'image/course1.jpg',
                     courseTitle: '体验课：Spring Cloud',
@@ -46,6 +50,9 @@ class Orders extends Component {
                 }
             ]
         }
+    };
+    componentWillMount() {
+      window.scrollTo(0, 0);
     };
     render() {
         const tabs = [
@@ -100,31 +107,46 @@ class Orders extends Component {
         }
         return (
             <div className="Orders">
+                <Loading hide={this.state.hideLoading}/>
                 <Tabs tabs={tabs}
                 initialPage={0}
                 onChange={(tab, index) => { console.log('onChange', index, tab); }}
                 onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
                 tabBarActiveTextColor="#1cb6b3"
                 >
-                <div style={{height: '100%', backgroundColor: '#fff' }}>
-                    {orders}
-                </div>
-                <div style={{height: '100%', backgroundColor: '#fff' }}>
-                    {waitingOrders}
-                </div>
-                <div style={{height: '100%', backgroundColor: '#fff' }}>
-                    {paidOrders}
-                </div>
-                <div style={{height: '100%', backgroundColor: '#fff' }}>
-                    {usedOrders}
-                </div>
-                <div style={{height: '100%', backgroundColor: '#fff' }}>
-                    {canceledOrders}
-                </div>
+                <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
+                    <div style={{height: '100%', backgroundColor: '#fff' }}>
+                        {orders}
+                    </div>
+                    <div style={{height: '100%', backgroundColor: '#fff' }}>
+                        {waitingOrders}
+                    </div>
+                    <div style={{height: '100%', backgroundColor: '#fff' }}>
+                        {paidOrders}
+                    </div>
+                    <div style={{height: '100%', backgroundColor: '#fff' }}>
+                        {usedOrders}
+                    </div>
+                    <div style={{height: '100%', backgroundColor: '#fff' }}>
+                        {canceledOrders}
+                    </div>
+                </PullToRefresh>
                 </Tabs>
-                <WhiteSpace />
             </div>
         );
+    };
+    componentDidMount() {
+        setTimeout(() =>
+            this.setState({hideLoading: true}),
+            1000
+        );
+    };
+    refresh() {
+        this.setState({refresh: true});
+
+        setTimeout(() => {
+            this.setState({refresh: false});
+        }, 1000);
     }
 }
 
