@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './User.css';
 import { NavLink } from 'react-router-dom';
 import Loading from '../components/Loading';
+import Axios from 'axios';
 
 class User extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class User extends Component {
       hideLoading: false,
       userId: 1,
       userName: 'hyf',
-      avatar: 'image/avatar.png'
+      avatar: 'image/avatar2.jpg',
+      phone: ''      
     }
   };
   componentWillMount() {
@@ -35,7 +37,7 @@ class User extends Component {
           </NavLink>
 
           <div className="user-bar">
-            <span className="method"><i className="icon phone"></i>手机账号</span><span className="bar-right">12345678910</span>
+            <span className="method"><i className="icon phone"></i>手机账号</span><span className="bar-right">{this.state.phone}</span>
           </div>
 
           <NavLink to="/appointments">
@@ -67,10 +69,40 @@ class User extends Component {
     );
   };
   componentDidMount() {
-      setTimeout(() =>
-          this.setState({hideLoading: true}),
-          1000
-      );
+    Axios.post("/SSM/test/CustomerHandler_islogin")
+    .then(res => {
+      if (res.data.result) {
+        // this.setState({hideLoading: true});
+      } else {
+        window.location.hash = 'login';
+      }
+    })
+    .catch(err => {
+      alert(err);
+      // window.location.assign("../#login");
+    });
+
+    Axios.post("/SSM/test/CustomerHandler_findCustomerByPhone")
+    .then(res => {
+      if (res.data) {
+        this.setState({
+          hideLoading: true,
+          userId: res.data.cid,
+          userName: res.data.phone,
+          phone: res.data.phone
+        });
+      } else {
+        alert("加载失败！");
+      }
+    })
+    .catch(err => {
+      alert(err);
+    })
+      
+      // setTimeout(() =>
+      //     this.setState({hideLoading: true}),
+      //     1000
+      // );
   }
 }
 

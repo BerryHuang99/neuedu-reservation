@@ -3,6 +3,7 @@ import './Appointments.css';
 import { Tabs, Badge, PullToRefresh } from 'antd-mobile';
 import Appointment from '../components/Apponitment';
 import Loading from '../components/Loading';
+import Axios from 'axios';
 
 class Appointments extends Component {
     constructor(props) {
@@ -101,22 +102,70 @@ class Appointments extends Component {
                 onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
                 tabBarActiveTextColor="#1cb6b3"
                 >
-                <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
-                    <div style={{ height: '100%', backgroundColor: '#fff' }}>
+                
+                <div style={{ height: '100%', backgroundColor: '#fff' }}>
+                    <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
                         {appointments}
-                    </div>
-                    <div style={{ height: '100%', backgroundColor: '#fff' }}>
+                    </PullToRefresh>
+                </div>
+                <div style={{ height: '100%', backgroundColor: '#fff' }}>
+                    <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
                         {waitingAppointments}
-                    </div>
-                    <div style={{ height: '100%', backgroundColor: '#fff' }}>
+                    </PullToRefresh>
+                </div>
+                <div style={{ height: '100%', backgroundColor: '#fff' }}>
+                    <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
                         {finishedAppointments}
-                    </div>
-                </PullToRefresh>
+                    </PullToRefresh>
+                </div>
+                
                 </Tabs>
             </div>
         );
     };
     componentDidMount() {
+        Axios.post("/SSM/test/CustomerHandler_islogin")
+        .then(res => {
+        if (res.data.result) {
+            this.setState({hideLoading: true});
+        } else {
+            window.location.hash = 'login';
+        }
+        })
+        .catch(err => {
+        alert(err);
+        // window.location.assign("../#login");
+        });
+
+        let state = {
+            "待处理": 0,
+            "已处理": 1,
+        };
+
+        Axios.post("/SSM/test/FreelistenbookHandler_findFreelistenbookByPhone")
+        .then(res => {
+            if (res.data) {
+                this.setState({
+                    hideLoading: true,
+                    appointments: res.data.map(item => {
+                        return {
+                            appointId: item.id,
+                            time: item.booktime,
+                            state: state[item.status],
+                            imageUrl: item.freelisten.imgurl,
+                            userName: item.cname,
+                            phone: item.tel
+                        }
+                    })
+                })
+            } else {
+                alert("加载失败");
+            }
+        })
+        .catch(err => {
+            alert(err);
+        });
+
         setTimeout(() =>
             this.setState({hideLoading: true}),
             1000
@@ -125,9 +174,38 @@ class Appointments extends Component {
     refresh() {
         this.setState({refresh: true});
 
-        setTimeout(() => {
-            this.setState({refresh: false});
-        }, 1000);
+        let state = {
+            "待处理": 0,
+            "已处理": 1,
+        };
+
+        Axios.post("/SSM/test/FreelistenbookHandler_findFreelistenbookByPhone")
+        .then(res => {
+            if (res.data) {
+                this.setState({
+                    hideLoading: true,
+                    appointments: res.data.map(item => {
+                        return {
+                            appointId: item.id,
+                            time: item.booktime,
+                            state: state[item.status],
+                            imageUrl: item.freelisten.imgurl,
+                            userName: item.cname,
+                            phone: item.tel
+                        }
+                    })
+                })
+            } else {
+                alert("加载失败");
+            }
+        })
+        .catch(err => {
+            alert(err);
+        });
+
+        // setTimeout(() => {
+        //     this.setState({refresh: false});
+        // }, 1000);
     }
 }
 

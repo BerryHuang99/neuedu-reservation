@@ -6,6 +6,7 @@ import { Input } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import { PullToRefresh } from 'antd-mobile';
 import Loading from '../components/Loading';
+import Axios from 'axios';
 
 class Home extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Home extends Component {
     this.state = {
       refresh: false,
       hideLoading: false,
-      bannerUrl: ["image/banner1.jpg", "image/banner2.jpg"],
+      bannerUrl: [], // ["image/banner1.jpg", "image/banner2.jpg"],
       coursesList1: [
          {
           courseId: 1,
@@ -23,6 +24,7 @@ class Home extends Component {
           courseTitle: "Spring Cloud免费试听",
           price: "0",
           courseCategory: "Spring",
+          type: 1
          },
          {
           courseId: 2,
@@ -30,6 +32,7 @@ class Home extends Component {
           courseTitle: "Go免费试听",
           price: "0",
           courseCategory: "Go",
+          type: 1
          } 
       ],
       coursesList2: [
@@ -39,6 +42,7 @@ class Home extends Component {
          courseTitle: "JavaScript入门",
          price: "120",
          courseCategory: "JavaScript",
+         type: 2
         },
         {
          courseId: 2,
@@ -46,6 +50,7 @@ class Home extends Component {
          courseTitle: "mpVue专业培训",
          price: "120",
          courseCategory: "框架",
+         type: 2
         } 
      ]
     }
@@ -55,8 +60,12 @@ class Home extends Component {
   };
   render() {
     let banner = [];
+    let showBanner = '';
     for (let i = 0; i < this.state.bannerUrl.length; i++) {
        banner.push(<div className="banner-wrap" key={i}><img className="banner-img" src={this.state.bannerUrl[i]} alt="banner"/></div>);
+    }
+    if (banner.length) {
+      showBanner = <ReactSwipe className="carousel" swipeOptions={{continuous: true, auto: 3000}}>{banner}</ReactSwipe>;
     }
     return (
       <div className="Home">
@@ -71,9 +80,9 @@ class Home extends Component {
         </div>
 
         <PullToRefresh onRefresh={this.refresh} refreshing={this.state.refresh}>
-        <ReactSwipe className="carousel" swipeOptions={{continuous: true, auto: 3000}}>
-          {banner}
-        </ReactSwipe>
+        
+        {showBanner}
+
         <div className="navigator">
           <NavLink to="/enterprise">
             <i className="building icon"></i>
@@ -116,10 +125,64 @@ class Home extends Component {
     );
   };
   componentDidMount() {
-    setTimeout(() =>
-      this.setState({hideLoading: true}),
-      1000
-    )
+    function getBanner() {
+      return Axios.post("/SSM/test/EnterpriseHandler_findSwiperByQid");
+    }
+    function getCourseList1() {
+      return Axios.post("/SSM/test/FreelistenHandler_findOnlineFreelisten");
+    }
+    function getCourseList2() {
+      return Axios.post("/SSM/test/LessonHandler_findAllLesson");
+    }
+
+    Axios.all([getBanner(), getCourseList1(), getCourseList2()])
+    .then(Axios.spread((res1, res2, res3) => {
+      let banner = res1.data;
+      let courses1 = res2.data;
+      let courses2 = res3.data;
+
+      if (courses1.length > 3) courses1.length = 3;
+      if (courses2.length > 3) courses2.length = 3;
+
+      if (banner && courses1 && courses2) {
+        this.setState({
+          bannerUrl: banner.map((item) => {
+            return '/upload/' + item.imgurl;
+          }),
+          coursesList1: courses1.map((item) => {
+            return {
+              courseId: item.fid,
+              imageUrl: item.imgurl,
+              courseTitle: item.title,
+              price: 0,
+              courseCategory: "试听课",
+              type: 1
+            }
+          }),
+          coursesList2: courses2.map(item => {
+            return {
+              courseId: item.lid,
+              imageUrl: item.imgurl,
+              courseTitle: item.lname,
+              price: item.lprice,
+              courseCategory: item.category,
+              type: 2
+            }
+          }),
+          hideLoading: true
+        });
+      } else {
+        alert("加载失败");
+      }
+    }))
+    .catch(err => {
+      alert(err);
+    });
+
+    // setTimeout(() =>
+    //   this.setState({hideLoading: true}),
+    //   1000
+    // );
   };
   refresh() {
     this.setState({refresh: true});

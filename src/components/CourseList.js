@@ -16,7 +16,7 @@ class CoursesList extends Component {
         for (let item of this.props.list) {
             list.push(
                 <Card className="course-card" key={item.courseId}>
-                    <NavLink to="/coursedetail">
+                    <NavLink to={"/coursedetail?" + ((item.type === 1) ? "fid=" : "lid=") + item.courseId}>
                         <Image className="course-image" src={item.imageUrl}/>
                     </NavLink>
                     <Card.Content>

@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import './Message.css';
-import { Feed, Modal, Button, Form, TextArea } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { Feed, Modal, Button, Form } from 'semantic-ui-react';
+import { TextareaItem } from 'antd-mobile'
+import Axios from 'axios';
 
 class Message extends Component {
     constructor(props) {
         super(props);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.sendComment = this.sendComment.bind(this);
+        this.changeContent = this.changeContent.bind(this);
+        this.thumUp = this.thumUp.bind(this);
 
         this.state = {
-            modalOpen: false
+            modalOpen: false,
+            content: ''
         }
     };
     render() {
@@ -51,7 +56,7 @@ class Message extends Component {
                     
                     </Feed.Extra>
                     <Feed.Meta>
-                        <span>
+                        <span onClick={this.thumUp}>
                             <i className={this.props.isLike ? 'icon like is-like' : 'icon like'}></i>
                             {this.props.likeNum}
                         </span>
@@ -63,12 +68,12 @@ class Message extends Component {
                             <Modal.Header>评论</Modal.Header>
                             <Modal.Content>
                                 <Form>
-                                    <TextArea placeholder="评论内容..."/>
+                                    <TextareaItem className="textarea-item" onBlur={this.changeContent} rows="5" placeholder="评论内容..."/>
                                 </Form>
                             </Modal.Content>
                             <Modal.Actions>
                                 <Button onClick={this.closeModal}>取消</Button>
-                                <Button className="submit" color="teal" onClick={this.closeModal}>提交</Button>
+                                <Button className="submit" color="teal" onClick={this.sendComment}>提交</Button>
                             </Modal.Actions>
                         </Modal>
 
@@ -85,7 +90,33 @@ class Message extends Component {
     };
     closeModal() {
         this.setState({modalOpen: false});
-        console.log("yes")
+    };
+    sendComment() {
+        if (this.state.content) {
+            let param = new URLSearchParams();
+            param.append('mid', this.props.messageId);
+            param.append('content', this.state.content);
+            Axios.post("/SSM/test/MessageHandler_saveMessagereply", param)
+            .then(() => {
+                this.setState({
+                    modalOpen: false
+                });
+                this.props.addComment(this.props.messageId, this.state.content);
+            })
+            .catch(err => {
+                alert(err);
+            })
+        } else {
+            alert("评论不可为空！");
+        }
+    };
+    changeContent(e) {
+        this.setState({
+            content: e
+        });
+    };
+    thumUp() {
+        this.props.thumUp(this.props.messageId);
     }
 }
 

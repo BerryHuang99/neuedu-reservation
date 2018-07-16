@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Teachers.css';
 import Loading from '../components/Loading';
+import Axios from 'axios'
 
 class Teachers extends Component {
     constructor(props) {
@@ -56,10 +57,42 @@ class Teachers extends Component {
         );
     };
     componentDidMount() {
-        setTimeout(() =>
-            this.setState({hideLoading: true}),
-            1000
-        );
+        function getBanner() {
+            return Axios.post("/SSM/test/TeacherHandler_findimgurl");
+        }
+        function getTeachers() {
+            return Axios.post("/SSM/test/TeacherHandler_findAllTeacher");
+        }
+
+        Axios.all([getBanner(), getTeachers()])
+        .then(Axios.spread((res1, res2) => {
+            let banner = res1.data;
+            let teachers = res2.data;
+
+            if (banner && teachers && teachers.data) {
+                this.setState({
+                    "banner": banner,
+                    "teachers": teachers.data.map(item => {
+                        return {
+                            name: item.tname,
+                            avatar: item.tphoto_url,
+                            detail: item.introduction
+                        }
+                    }),
+                    hideLoading: true
+                });
+            } else {
+                alert("加载失败");
+            }
+        }))
+        .catch(err => {
+            alert(err);
+        })
+
+        // setTimeout(() =>
+        //     this.setState({hideLoading: true}),
+        //     1000
+        // );
     }
 }
 

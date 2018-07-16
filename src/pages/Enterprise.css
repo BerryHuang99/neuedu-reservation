@@ -24,3 +24,15 @@ hr {
     margin: 15px auto;
     box-shadow: 0 0 10px #ccc;
 }
+
+.show-enterprise {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.show-enterprise * {
+   margin-bottom: 10px !important;
+   padding: 0px !important;
+   border: 0 !important;
+}

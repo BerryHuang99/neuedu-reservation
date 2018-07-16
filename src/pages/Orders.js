@@ -3,11 +3,13 @@ import './Orders.css';
 import { Tabs, PullToRefresh, Badge } from 'antd-mobile';
 import Order from '../components/Order';
 import Loading from '../components/Loading';
+import Axios from 'axios';
 
 class Orders extends Component {
     constructor(props) {
         super(props);
         this.refresh = this.refresh.bind(this);
+        this.changeState = this.changeState.bind(this);
 
         this.state = {
             refresh: false,
@@ -47,6 +49,13 @@ class Orders extends Component {
                     imageUrl: 'image/course1.jpg',
                     courseTitle: '体验课：Spring Cloud',
                     coursePrice: 0,
+                },
+                {
+                    orderId: 4,
+                    state: 5,
+                    imageUrl: 'image/course1.jpg',
+                    courseTitle: '体验课：Spring Cloud',
+                    coursePrice: 0,
                 }
             ]
         }
@@ -77,76 +86,174 @@ class Orders extends Component {
         });
         let canceledOrders = [];
         const cOrders = this.state.orders.filter(a => {
-            return a.state === 3 || a.state === 4;
+            return a.state === 3 || a.state === 4 || a.state === 5;
         });
 
         for (let i = 0; i < this.state.orders.length; i++) {
             orders.push(<Order key={this.state.orders[i].orderId} id={this.state.orders[i].orderId} 
                 state={this.state.orders[i].state} title={this.state.orders[i].courseTitle}
-                imageUrl={this.state.orders[i].imageUrl} price={this.state.orders[i].coursePrice}></Order>)
+                imageUrl={this.state.orders[i].imageUrl} price={this.state.orders[i].coursePrice}
+                changeState={this.changeState}></Order>)
         }
         for (let i = 0; i < wOrders.length; i++) {
             waitingOrders.push(<Order key={wOrders[i].orderId} id={wOrders[i].orderId} 
                 state={wOrders[i].state} title={wOrders[i].courseTitle}
-                imageUrl={wOrders[i].imageUrl} price={wOrders[i].coursePrice}></Order>)
+                imageUrl={wOrders[i].imageUrl} price={wOrders[i].coursePrice}
+                changeState={this.changeState}></Order>)
         }
         for (let i = 0; i < pOrders.length; i++) {
             paidOrders.push(<Order key={pOrders[i].orderId} id={pOrders[i].orderId} 
                 state={pOrders[i].state} title={pOrders[i].courseTitle}
-                imageUrl={pOrders[i].imageUrl} price={pOrders[i].coursePrice}></Order>)
+                imageUrl={pOrders[i].imageUrl} price={pOrders[i].coursePrice}
+                changeState={this.changeState}></Order>)
         }
         for (let i = 0; i < uOrders.length; i++) {
             usedOrders.push(<Order key={uOrders[i].orderId} id={uOrders[i].orderId} 
                 state={uOrders[i].state} title={uOrders[i].courseTitle}
-                imageUrl={uOrders[i].imageUrl} price={uOrders[i].coursePrice}></Order>)
+                imageUrl={uOrders[i].imageUrl} price={uOrders[i].coursePrice}
+                changeState={this.changeState}></Order>)
         }
         for (let i = 0; i < cOrders.length; i++) {
             canceledOrders.push(<Order key={cOrders[i].orderId} id={cOrders[i].orderId} 
                 state={cOrders[i].state} title={cOrders[i].courseTitle}
-                imageUrl={cOrders[i].imageUrl} price={cOrders[i].coursePrice}></Order>)
+                imageUrl={cOrders[i].imageUrl} price={cOrders[i].coursePrice}
+                changeState={this.changeState}></Order>)
         }
         return (
             <div className="Orders">
                 <Loading hide={this.state.hideLoading}/>
                 <Tabs tabs={tabs}
                 initialPage={0}
-                onChange={(tab, index) => { console.log('onChange', index, tab); }}
-                onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
                 tabBarActiveTextColor="#1cb6b3"
                 >
+                
+                <div style={{height: '100%', backgroundColor: '#fff' }}>
                 <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
-                    <div style={{height: '100%', backgroundColor: '#fff' }}>
-                        {orders}
-                    </div>
-                    <div style={{height: '100%', backgroundColor: '#fff' }}>
-                        {waitingOrders}
-                    </div>
-                    <div style={{height: '100%', backgroundColor: '#fff' }}>
-                        {paidOrders}
-                    </div>
-                    <div style={{height: '100%', backgroundColor: '#fff' }}>
-                        {usedOrders}
-                    </div>
-                    <div style={{height: '100%', backgroundColor: '#fff' }}>
-                        {canceledOrders}
-                    </div>
+                    {orders}
                 </PullToRefresh>
+                </div>
+                <div style={{height: '100%', backgroundColor: '#fff' }}>
+                <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
+                    {waitingOrders}
+                </PullToRefresh>
+                </div>
+                <div style={{height: '100%', backgroundColor: '#fff' }}>
+                <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
+                    {paidOrders}
+                </PullToRefresh>
+                </div>
+                <div style={{height: '100%', backgroundColor: '#fff' }}>
+                <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
+                    {usedOrders}
+                </PullToRefresh>
+                </div>
+                <div style={{height: '100%', backgroundColor: '#fff' }}>
+                <PullToRefresh refreshing={this.state.refresh} onRefresh={this.refresh}>
+                    {canceledOrders}
+                </PullToRefresh>
+                </div>
+                
                 </Tabs>
             </div>
         );
     };
     componentDidMount() {
-        setTimeout(() =>
-            this.setState({hideLoading: true}),
-            1000
-        );
+        Axios.post("/SSM/test/CustomerHandler_islogin")
+        .then(res => {
+        if (res.data.result) {
+            this.setState({hideLoading: true});
+        } else {
+            window.location.hash = 'login';
+        }
+        })
+        .catch(err => {
+        alert(err);
+        // window.location.assign("../#login");
+        });
+
+        let state = {
+            "待付款": 0,
+            "已付款": 1,
+            "已使用": 2,
+            "已取消": 3,
+            "退款中": 4,
+            "已退款": 5
+        };
+
+        Axios.post("/SSM/test/OrderHandler_findOrderByPhone")
+        .then(res => {
+            if (res.data) {
+                this.setState({
+                    hideLoading: true,
+                    orders: res.data.map(item => {
+                        return {
+                            orderId: item.oid,
+                            state: state[item.status],
+                            imageUrl: item.lesson.imgurl,
+                            courseTitle: item.lesson.lname,
+                            coursePrice: item.lesson.lprice,
+                        }
+                    })
+                })
+            }
+        })
+        .catch(err => {
+            alert(err);
+        });
+
+        // setTimeout(() =>
+        //     this.setState({hideLoading: true}),
+        //     1000
+        // );
     };
     refresh() {
         this.setState({refresh: true});
 
+        let state = {
+            "待付款": 0,
+            "已付款": 1,
+            "已使用": 2,
+            "已取消": 3,
+            "退款中": 4,
+            "已退款": 5
+        };
+
+        Axios.post("/SSM/test/OrderHandler_findOrderByPhone")
+        .then(res => {
+            if (res.data) {
+                this.setState({
+                    hideLoading: true,
+                    orders: res.data.map(item => {
+                        return {
+                            orderId: item.oid,
+                            state: state[item.status],
+                            imageUrl: item.lesson.imgurl,
+                            courseTitle: item.lesson.lname,
+                            coursePrice: item.lesson.lprice,
+                        }
+                    })
+                })
+            }
+        })
+        .catch(err => {
+            alert(err);
+        });
+
         setTimeout(() => {
             this.setState({refresh: false});
         }, 1000);
+    };
+    changeState(state, id) {
+        let orders = this.state.orders;
+        // console.log(state + " " +id);
+        orders.forEach(item => {
+            if (item.orderId == id) {
+                item.state = state;
+            }
+        });
+        this.setState({
+            orders: orders
+        })
     }
 }
 
